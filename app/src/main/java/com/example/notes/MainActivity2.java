@@ -44,6 +44,8 @@ public class MainActivity2 extends AppCompatActivity {
             return true;
         }
         if (item.getItemId()==R.id.addNote) {
+            Intent intent = new Intent(this, MainActivity3.class);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
