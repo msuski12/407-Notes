@@ -2,7 +2,9 @@ package com.example.notes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,11 +37,14 @@ public class MainActivity2 extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId()==R.id.logout) {
+            SharedPreferences sharedPreferences = getSharedPreferences("com.example.notes", Context.MODE_PRIVATE);
+            sharedPreferences.edit().remove("username").apply();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            return true;
         }
         if (item.getItemId()==R.id.addNote) {
-
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
