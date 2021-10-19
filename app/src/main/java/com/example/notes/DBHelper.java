@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 public class DBHelper {
+
     SQLiteDatabase sqLiteDatabase;
 
     public DBHelper (SQLiteDatabase sqLiteDatabase) {
@@ -52,7 +53,7 @@ public class DBHelper {
 
     public void updateNote(String content, String date, String title, String username) {
         createTable();
-        sqLiteDatabase.execSQL(String.format("UPDATE notes set content = '%s', date = 's' where title = '%s' and username = '%s'",
+        sqLiteDatabase.execSQL(String.format("UPDATE notes set content = '%s', date = '%s' where title = '%s' and username = '%s'",
                 content, date, title, username));
     }
 }

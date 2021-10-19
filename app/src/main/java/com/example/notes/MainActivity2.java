@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,9 +33,15 @@ public class MainActivity2 extends AppCompatActivity {
         String str = intent.getStringExtra("message");
         textView.setText(String.format("Welcome %s!", str));
 
+        SharedPreferences sharedPreferences = getSharedPreferences("com.example.notes", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "");
+        SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("notes", Context.MODE_PRIVATE, null);
+        DBHelper dbHelper = new DBHelper(sqLiteDatabase);
+        notes = dbHelper.readNotes(username);
+
         ArrayList<String> displayNotes = new ArrayList<>();
         for (Note note : notes) {
-            displayNotes.add(String.format("Title:%s\nDate:%s", note.getTitle(), note.getDate()));
+            displayNotes.add(String.format("Title: %s\nDate: %s", note.getTitle(), note.getDate()));
         }
 
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, displayNotes);
@@ -60,7 +67,6 @@ public class MainActivity2 extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         if (item.getItemId()==R.id.logout) {
             SharedPreferences sharedPreferences = getSharedPreferences("com.example.notes", Context.MODE_PRIVATE);
             sharedPreferences.edit().remove("username").apply();
